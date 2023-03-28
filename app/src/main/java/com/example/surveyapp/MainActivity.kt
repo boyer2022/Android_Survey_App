@@ -1,9 +1,15 @@
+/*
+To create ViewModel, right click on 'java' 'com.example.surveyapp' with "New" Kotlin Class/File,
+Class.
+ */
+
 package com.example.surveyapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,9 +20,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var yesCountView: TextView
     private lateinit var noCountView: TextView
 
-    private var yesCount = 0
-    private var noCount= 0
+//    private var yesCount = 0
+//    private var noCount= 0
 
+    // Create Global variable
+    private val votesViewModel by lazy {
+        ViewModelProvider(this).get(VotesViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,32 +51,42 @@ class MainActivity : AppCompatActivity() {
 
         resetButton.setOnClickListener {
             resetCount()
-
         }
+// Updates the votes (especially when rotated/destroyed)
+        updateCounts()
     }
 
     private fun addToYesCount() {
-
-        yesCount++
+    // Original design
+//        yesCount++
+        // Creates a ViewModel to store the data when destroyed
+        votesViewModel.yesCounts++
         updateCounts()
     }
 
     private fun addToNoCount() {
-
-        noCount++
+        // Original design
+//        noCount++
+        // Creates a ViewModel to store the data when destroyed
+        votesViewModel.noCounts++
         updateCounts()
 
     }
 
     private fun updateCounts() {
-        yesCountView.text = getString(R.string.yes_vote_message, yesCount)
-        noCountView.text = getString(R.string.no_vote_message, noCount)
+        // yesCountView.text = getString(R.string.yes_vote_message, yesCounts)
+        //  noCountView.text = getString(R.string.no_vote_message, noCounts)
+
+        yesCountView.text = getString(R.string.yes_vote_message, votesViewModel.yesCounts)
+        noCountView.text = getString(R.string.no_vote_message, votesViewModel.noCounts)
     }
 
     private fun resetCount() {
         yesCountView.text = " "
         noCountView.text = " "
-        yesCount = 0
-        noCount = 0
+//        yesCount = 0
+//        noCount = 0
+        votesViewModel.yesCounts = 0
+        votesViewModel.noCounts = 0
     }
 }
