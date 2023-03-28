@@ -76,7 +76,4 @@
         app:layout_constraintStart_toStartOf="@+id/no_button"
         app:layout_constraintTop_toBottomOf="@+id/no_button" />
 
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

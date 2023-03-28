@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateCounts() {
-        yesCountView.text = "$yesCount votes"
-        noCountView.text = "$noCount votes"
+        yesCountView.text = getString(R.string.yes_vote_message, yesCount)
+        noCountView.text = getString(R.string.no_vote_message, noCount)
     }
 
     private fun resetCount() {
